@@ -3,7 +3,19 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30128.74
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GatewayManager.Data", "GatewayManager.Data\GatewayManager.Data.csproj", "{27373CC4-49A8-4679-9688-1AD2FF0FA288}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{27373CC4-49A8-4679-9688-1AD2FF0FA288}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{27373CC4-49A8-4679-9688-1AD2FF0FA288}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{27373CC4-49A8-4679-9688-1AD2FF0FA288}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{27373CC4-49A8-4679-9688-1AD2FF0FA288}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
