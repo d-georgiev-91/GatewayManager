@@ -1,7 +1,6 @@
-﻿using System;
-using System.Linq;
-using Humanizer;
+﻿using GatewayManager.Data.Configurations;
 using Microsoft.EntityFrameworkCore;
+using WebSiteManager.DataModels;
 
 namespace GatewayManager.Data
 {
@@ -22,5 +21,17 @@ namespace GatewayManager.Data
 
             base.OnConfiguring(optionsBuilder);
         }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            var assembly = GetType().Assembly;
+            modelBuilder.ApplyConfigurationsFromAssembly(assembly);
+
+            base.OnModelCreating(modelBuilder);
+        }
+
+        public DbSet<Gateway> Gateways { get; set; }
+
+        public DbSet<PeripheralDevice> PeripheralDevice { get; set; }
     }
 }
