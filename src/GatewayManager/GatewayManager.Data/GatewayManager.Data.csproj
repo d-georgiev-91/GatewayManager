@@ -19,6 +19,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\WebSiteManager.DataModels\WebSiteManager.DataModels.csproj" />
+    <ProjectReference Include="..\GatewayManager.DataModels\GatewayManager.DataModels.csproj" />
   </ItemGroup>
 </Project>

@@ -21,7 +21,7 @@ namespace GatewayManager.Data.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("WebSiteManager.DataModels.Gateway", b =>
+            modelBuilder.Entity("GatewayManager.DataModels.Gateway", b =>
                 {
                     b.Property<string>("SerialNumber")
                         .HasColumnType("nvarchar(450)");
@@ -41,7 +41,7 @@ namespace GatewayManager.Data.Migrations
                     b.ToTable("Gateways");
                 });
 
-            modelBuilder.Entity("WebSiteManager.DataModels.PeripheralDevice", b =>
+            modelBuilder.Entity("GatewayManager.DataModels.PeripheralDevice", b =>
                 {
                     b.Property<long>("Uid")
                         .ValueGeneratedOnAdd()
@@ -71,9 +71,9 @@ namespace GatewayManager.Data.Migrations
                     b.ToTable("PeripheralDevice");
                 });
 
-            modelBuilder.Entity("WebSiteManager.DataModels.PeripheralDevice", b =>
+            modelBuilder.Entity("GatewayManager.DataModels.PeripheralDevice", b =>
                 {
-                    b.HasOne("WebSiteManager.DataModels.Gateway", "Gateway")
+                    b.HasOne("GatewayManager.DataModels.Gateway", "Gateway")
                         .WithMany("PeripheralDevices")
                         .HasForeignKey("GatewaySerialNumber");
                 });

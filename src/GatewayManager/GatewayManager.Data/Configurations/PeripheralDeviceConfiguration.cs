@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using WebSiteManager.DataModels;
+using GatewayManager.DataModels;
 
 namespace GatewayManager.Data.Configurations
 {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace WebSiteManager.DataModels
+namespace GatewayManager.DataModels
 {
     public class PeripheralDevice
     {

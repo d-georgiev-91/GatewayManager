@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace WebSiteManager.DataModels
+namespace GatewayManager.DataModels
 {
     public class Gateway
     {
