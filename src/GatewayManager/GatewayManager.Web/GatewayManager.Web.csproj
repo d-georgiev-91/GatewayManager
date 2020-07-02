@@ -5,10 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.5">
       <PrivateAssets>all</PrivateAssets>
@@ -19,5 +15,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\GatewayManager.Data\GatewayManager.Data.csproj" />
+    <ProjectReference Include="..\GatewayManager.Services\GatewayManager.Services.csproj" />
   </ItemGroup>
 </Project>
