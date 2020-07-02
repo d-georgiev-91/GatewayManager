@@ -1,5 +1,4 @@
-﻿using GatewayManager.Data.Configurations;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using GatewayManager.DataModels;
 
 namespace GatewayManager.Data
