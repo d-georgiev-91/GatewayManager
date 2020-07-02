@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
 
 namespace GatewayManager.Web
 {
@@ -23,6 +24,11 @@ namespace GatewayManager.Web
             services.AddDbContext<GatewayManagerDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebSiteManager API", Version = "v1" });
+            });
+
             services.AddControllers();
         }
 
@@ -35,6 +41,13 @@ namespace GatewayManager.Web
             }
 
             app.UseHttpsRedirection();
+
+            app.UseSwagger();
+
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "WebSiteManager API V1");
+            });
 
             app.UseRouting();
 
