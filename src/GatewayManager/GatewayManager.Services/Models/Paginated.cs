@@ -4,7 +4,7 @@ namespace GatewayManager.Services.Models
 {
     public class Paginated<TData>
     {
-        public IEnumerable<TData> Data { get; set; }
+        public IReadOnlyCollection<TData> Data { get; set; }
 
         public int TotalCount { get; set; }
     }
