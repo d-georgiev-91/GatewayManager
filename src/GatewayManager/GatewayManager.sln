@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GatewayManager.Web", "Gatew
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GatewayManager.Services", "GatewayManager.Services\GatewayManager.Services.csproj", "{FA98A6F7-EF2D-415D-AFEF-4B50543C906A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GatewayManager.Services.Tests", "GatewayManager.Services.Tests\GatewayManager.Services.Tests.csproj", "{E5800935-967F-486A-B60A-15193F09720A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GatewayManager.Services.Tests", "GatewayManager.Services.Tests\GatewayManager.Services.Tests.csproj", "{E5800935-967F-486A-B60A-15193F09720A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GatewayManager.Web.Tests", "GatewayManager.Web.Tests\GatewayManager.Web.Tests.csproj", "{30174A90-F2BE-469F-AA6E-6255E69D1892}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{E5800935-967F-486A-B60A-15193F09720A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E5800935-967F-486A-B60A-15193F09720A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E5800935-967F-486A-B60A-15193F09720A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{30174A90-F2BE-469F-AA6E-6255E69D1892}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{30174A90-F2BE-469F-AA6E-6255E69D1892}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{30174A90-F2BE-469F-AA6E-6255E69D1892}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{30174A90-F2BE-469F-AA6E-6255E69D1892}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
