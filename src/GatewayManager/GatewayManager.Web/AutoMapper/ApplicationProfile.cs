@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using GatewayManager.DataModels;
+using GatewayManager.Web.Models;
 
 namespace GatewayManager.Web.AutoMapper
 {
@@ -7,7 +7,11 @@ namespace GatewayManager.Web.AutoMapper
     {
         public ApplicationProfile()
         {
-            CreateMap<Models.GatewayCreateModel, Gateway>();
+            CreateMap<GatewayCreateModel, DataModels.Gateway>();
+            CreateMap<DataModels.PeripheralDevice, PeripheralDevice>();
+            CreateMap<DataModels.Gateway, GatewayDetails>()
+                .ForMember(dest => dest.PeripheralDevices,
+                    opt => opt.MapFrom(g => g.PeripheralDevices));
         }
     }
 }
