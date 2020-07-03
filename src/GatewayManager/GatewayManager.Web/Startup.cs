@@ -1,4 +1,5 @@
 using AutoMapper;
+using FluentValidation.AspNetCore;
 using GatewayManager.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -27,7 +28,8 @@ namespace GatewayManager.Web
 
             services.AddAutoMapper(typeof(Startup));
 
-            services.AddControllers();
+            services.AddControllers()
+                .AddFluentValidation();
 
             services.AddSwaggerGen(c =>
             {
