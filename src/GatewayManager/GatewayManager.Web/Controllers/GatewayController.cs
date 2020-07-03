@@ -45,7 +45,7 @@ namespace GatewayManager.Web.Controllers
 
             if (result.Errors.ContainsKey(ErrorType.NotFound))
             {
-                return NotFound(serialNumber);
+                return NotFound(result.Errors[ErrorType.NotFound]);
             }
 
             var responseData = _mapper.Map<Gateway, GatewayDetails>(result.Data);
