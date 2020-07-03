@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.Threading.Tasks;
+using AutoMapper;
 using GatewayManager.DataModels;
 using GatewayManager.Services;
 using GatewayManager.Web.Models;
@@ -22,10 +23,10 @@ namespace GatewayManager.Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(GatewayCreateModel gatewayCreateModel)
+        public async Task<IActionResult> Create(GatewayCreateModel gatewayCreateModel)
         {
             var gateway = _mapper.Map<GatewayCreateModel, Gateway>(gatewayCreateModel);
-            _gatewayService.Add(gateway);
+            await _gatewayService.AddAsync(gateway);
 
             return Ok();
         }
