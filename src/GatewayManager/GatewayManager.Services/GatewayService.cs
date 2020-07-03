@@ -2,7 +2,6 @@
 using GatewayManager.Data;
 using GatewayManager.DataModels;
 using Microsoft.EntityFrameworkCore;
-using WebSiteManager.Services;
 
 namespace GatewayManager.Services
 {

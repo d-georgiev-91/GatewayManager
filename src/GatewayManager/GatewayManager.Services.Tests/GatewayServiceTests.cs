@@ -9,7 +9,6 @@ using MockQueryable.NSubstitute;
 using NSubstitute;
 using NSubstitute.ReturnsExtensions;
 using NUnit.Framework;
-using WebSiteManager.Services;
 
 namespace GatewayManager.Services.Tests
 {

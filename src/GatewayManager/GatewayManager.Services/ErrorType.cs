@@ -1,4 +1,4 @@
-﻿namespace WebSiteManager.Services
+﻿namespace GatewayManager.Services
 {
     public enum ErrorType
     {

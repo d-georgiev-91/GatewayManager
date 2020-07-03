@@ -1,6 +1,4 @@
-﻿using WebSiteManager.Services;
-
-namespace GatewayManager.Services
+﻿namespace GatewayManager.Services
 {
     public class ServiceResultError
     {

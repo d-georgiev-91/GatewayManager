@@ -9,7 +9,6 @@ using GatewayManager.Web.Tests.AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
 using NUnit.Framework;
-using WebSiteManager.Services;
 
 namespace GatewayManager.Web.Tests.Controllers
 {

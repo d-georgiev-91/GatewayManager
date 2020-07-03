@@ -3,7 +3,6 @@ using AutoMapper;
 using GatewayManager.DataModels;
 using GatewayManager.Services;
 using GatewayManager.Web.Models;
-using WebSiteManager.Services;
 
 namespace GatewayManager.Web.Controllers
 {
@@ -51,6 +50,20 @@ namespace GatewayManager.Web.Controllers
             var responseData = _mapper.Map<Gateway, GatewayDetails>(result.Data);
 
             return Ok(responseData);
+        }
+
+        [HttpGet]
+        [Route("")]
+        public async Task<IActionResult> GetAll(Page page)
+        {
+            var result = _gatewayService.GetAll(_mapper.Map<Page>(page));
+
+            if (result.Errors.ContainsKey(ErrorType.UnexpectedError))
+            {
+                return BadRequest();
+            }
+
+            return Ok(_mapper.Map<Models.Paginated<Models.WebSiteDetailed>>(result.Data));
         }
     }
 }

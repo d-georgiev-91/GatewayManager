@@ -35,7 +35,7 @@ namespace GatewayManager.Web
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebSiteManager API", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "GatewayManager API", Version = "v1" });
             });
         }
 
@@ -55,7 +55,7 @@ namespace GatewayManager.Web
 
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "WebSiteManager API V1");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "GatewayManager API V1");
             });
 
             app.UseRouting();
