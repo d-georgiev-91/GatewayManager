@@ -5,6 +5,6 @@ namespace GatewayManager.Services
 {
     public interface IGatewayService
     {
-        Task AddAsync(Gateway gateway);
+        Task<ServiceResult> AddAsync(Gateway gateway);
     }
 }

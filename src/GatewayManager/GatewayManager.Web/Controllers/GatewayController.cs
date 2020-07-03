@@ -3,6 +3,7 @@ using AutoMapper;
 using GatewayManager.DataModels;
 using GatewayManager.Services;
 using GatewayManager.Web.Models;
+using WebSiteManager.Services;
 
 namespace GatewayManager.Web.Controllers
 {
@@ -26,9 +27,14 @@ namespace GatewayManager.Web.Controllers
         public async Task<IActionResult> Create(GatewayCreateModel gatewayCreateModel)
         {
             var gateway = _mapper.Map<GatewayCreateModel, Gateway>(gatewayCreateModel);
-            await _gatewayService.AddAsync(gateway);
+            var result = await _gatewayService.AddAsync(gateway);
 
-            return Ok();
+            if (result.HasErrors && result.Errors.ContainsKey(ErrorType.InvalidInput))
+            {
+                return BadRequest(result.Errors[ErrorType.InvalidInput]);
+            }
+
+            return CreatedAtAction("GetDetails", new { id = 1 }, gatewayCreateModel);
         }
     }
 }
