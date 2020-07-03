@@ -24,7 +24,7 @@ namespace GatewayManager.Web.Validators
                 }
 
                 return bytes.All(r => byte.TryParse(r, out _));
-            }).WithMessage("{PropertyName} is invalid ip address: {IP}");
+            }).WithMessage("\"{IP}\" is invalid ip address.");
         }
     }
 }
