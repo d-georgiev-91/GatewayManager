@@ -1,3 +1,5 @@
+using System.Reflection;
+using Autofac;
 using AutoMapper;
 using FluentValidation.AspNetCore;
 using GatewayManager.Data;
@@ -29,7 +31,7 @@ namespace GatewayManager.Web
             services.AddAutoMapper(typeof(Startup));
 
             services.AddControllers()
-                .AddFluentValidation();
+                .AddFluentValidation(fv => fv.RegisterValidatorsFromAssembly(Assembly.GetExecutingAssembly()));
 
             services.AddSwaggerGen(c =>
             {
