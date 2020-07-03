@@ -1,6 +1,5 @@
 ﻿using System.Threading.Tasks;
 using AutoMapper;
-using GatewayManager.DataModels;
 using GatewayManager.Services;
 using GatewayManager.Web.Models;
 
@@ -25,7 +24,7 @@ namespace GatewayManager.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(GatewayCreateModel gatewayCreateModel)
         {
-            var gateway = _mapper.Map<GatewayCreateModel, Gateway>(gatewayCreateModel);
+            var gateway = _mapper.Map<GatewayCreateModel, DataModels.Gateway>(gatewayCreateModel);
             var result = await _gatewayService.AddAsync(gateway);
 
             if (result.HasErrors && result.Errors.ContainsKey(ErrorType.InvalidInput))
@@ -47,23 +46,19 @@ namespace GatewayManager.Web.Controllers
                 return NotFound(result.Errors[ErrorType.NotFound]);
             }
 
-            var responseData = _mapper.Map<Gateway, GatewayDetails>(result.Data);
+            var responseData = _mapper.Map<DataModels.Gateway, GatewayDetails>(result.Data);
 
             return Ok(responseData);
         }
 
         [HttpGet]
         [Route("")]
-        public async Task<IActionResult> GetAll(Page page)
+        public async Task<IActionResult> GetAllAsync([FromQuery] Page page)
         {
-            var result = _gatewayService.GetAll(_mapper.Map<Page>(page));
+            var serviceResult = await _gatewayService.GetAllAsync(_mapper.Map<Page, Services.Models.Page>(page));
+            var pageResult = _mapper.Map<Services.Models.Paginated<DataModels.Gateway>, Paginated<Gateway>>(serviceResult.Data);
 
-            if (result.Errors.ContainsKey(ErrorType.UnexpectedError))
-            {
-                return BadRequest();
-            }
-
-            return Ok(_mapper.Map<Models.Paginated<Models.WebSiteDetailed>>(result.Data));
+            return Ok(pageResult);
         }
     }
 }
