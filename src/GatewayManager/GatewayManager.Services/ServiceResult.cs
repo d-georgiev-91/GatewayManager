@@ -16,7 +16,14 @@ namespace GatewayManager.Services
         public ServiceResult AddError(ErrorType type, string message)
         {
             var error = new ServiceResultError(type, message);
-            Errors.Add(type, error);
+            AddError(error);
+
+            return this;
+        }
+
+        public ServiceResult AddError(ServiceResultError error)
+        {
+            Errors.Add(error.Error, error);
 
             return this;
         }
