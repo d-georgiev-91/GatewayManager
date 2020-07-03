@@ -10,6 +10,6 @@ namespace GatewayManager.Services
         
         Task<ServiceResult<Gateway>> FindAsync(string serialNumber);
         
-        ServiceResult<Paginated<Gateway>> GetAll(Page page);
+        Task<ServiceResult<Paginated<Gateway>>> GetAllAsync(Page page);
     }
 }

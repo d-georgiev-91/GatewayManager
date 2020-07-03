@@ -49,22 +49,22 @@ namespace GatewayManager.Services
             return result;
         }
 
-        public ServiceResult<Paginated<Gateway>> GetAll(Page page)
+        public async Task<ServiceResult<Paginated<Gateway>>> GetAllAsync(Page page)
         {
             var serviceResult = new ServiceResult<Paginated<Gateway>>();
 
-            var gatewaysQuery = _gatewayDataService.GetAll();
+            var gateways = _gatewayDataService.GetAll();
 
-            var pageQuery = gatewaysQuery
+            var gatewaysCount = gateways.Count();
+
+            gateways = gateways
                 .Take(page.Size)
-                .Skip(page.Index * page.Size)
-                .GroupBy(p => new { Total = gatewaysQuery.Count() })
-                .First();
+                .Skip(page.Index * page.Size);
 
             serviceResult.Data = new Paginated<Gateway>
             {
-                Data = pageQuery.Select(p => p),
-                TotalCount = pageQuery.Key.Total
+                Data = await gateways.ToListAsync(),
+                TotalCount = gatewaysCount
             };
 
             return serviceResult;
