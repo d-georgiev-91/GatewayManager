@@ -39,6 +39,18 @@ namespace GatewayManager.Web.Controllers
 
         [HttpGet]
         [Route("{serialNumber}/details")]
-        public IActionResult GetDetails(string serialNumber) => throw new System.NotImplementedException();
+        public async Task<IActionResult> GetDetails(string serialNumber)
+        {
+            var result = await _gatewayService.FindAsync(serialNumber);
+
+            if (result.Errors.ContainsKey(ErrorType.NotFound))
+            {
+                return NotFound(serialNumber);
+            }
+
+            var responseData = _mapper.Map<Gateway, GatewayDetails>(result.Data);
+
+            return Ok(responseData);
+        }
     }
 }
