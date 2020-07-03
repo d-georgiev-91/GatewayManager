@@ -31,7 +31,7 @@ namespace GatewayManager.Web.Controllers
 
             if (result.HasErrors && result.Errors.ContainsKey(ErrorType.InvalidInput))
             {
-                return BadRequest(result.Errors[ErrorType.InvalidInput]);
+                return BadRequest(result.Errors[ErrorType.InvalidInput].Message);
             }
 
             return CreatedAtAction(nameof(GetDetails), new { gatewayCreateModel.SerialNumber }, gatewayCreateModel);
