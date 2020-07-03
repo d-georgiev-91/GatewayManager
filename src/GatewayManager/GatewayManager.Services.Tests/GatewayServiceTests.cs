@@ -1,6 +1,11 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
 using GatewayManager.Data;
 using GatewayManager.DataModels;
+using MockQueryable.NSubstitute;
 using NSubstitute;
 using NSubstitute.ReturnsExtensions;
 using NUnit.Framework;
@@ -60,6 +65,55 @@ namespace GatewayManager.Services.Tests
             _gatewayDataService.Received(1).SaveChangesAsync();
 
             Assert.That(result.HasErrors, Is.False);
+        }
+
+        [Test]
+        public async Task WhenFindAsyncIsCalledAndThereIsNoMatchingGatewayThenServiceResultWithErrorShouldBeReturnedAndDataShouldBeEmpty()
+        {
+            const string serialNumber = "serial number";
+            var gatewaysMock = new List<Gateway>().AsQueryable().BuildMock();
+            _gatewayDataService.Filter(Arg.Any<Expression<Func<Gateway, bool>>>(),
+                Arg.Any<Expression<Func<Gateway, ICollection<PeripheralDevice>>>>())
+                .Returns(gatewaysMock);
+
+            var result = await _gatewayService.FindAsync(serialNumber);
+
+            Assert.That(result.HasErrors, Is.True);
+            Assert.That(result.Errors, Contains.Key(ErrorType.NotFound));
+            Assert.That(result.Data, Is.Null);
+        }
+
+        [Test]
+        public async Task WhenFindAsyncIsCalledAndThereIsMatchingGatewayThenServiceResultWithNoErrorShouldBeReturnedAndDataShouldBeNotEmpty()
+        {
+            const string serialNumber = "serial number";
+            var gateway = new Gateway
+            {
+                SerialNumber = serialNumber,
+                Name = "Uber",
+                IPv4Address = "127.0.0.0",
+                PeripheralDevices = new List<PeripheralDevice>
+                {
+                    new PeripheralDevice
+                    {
+                        Uid = 1,
+                        DateCreated = DateTime.Now,
+                        IsOnline = true,
+                        Vendor = "Sony"
+                    }
+                }
+            };
+
+            var gatewaysMock = new List<Gateway> { gateway }.AsQueryable().BuildMock();
+            _gatewayDataService.Filter(Arg.Any<Expression<Func<Gateway, bool>>>(),
+                    Arg.Any<Expression<Func<Gateway, ICollection<PeripheralDevice>>>>())
+                .Returns(gatewaysMock);
+
+            var result = await _gatewayService.FindAsync(serialNumber);
+
+            Assert.That(result.HasErrors, Is.False);
+            Assert.That(result.Data, Is.Not.Null);
+            Assert.That(result.Data, Is.EqualTo(gateway));
         }
     }
 }
