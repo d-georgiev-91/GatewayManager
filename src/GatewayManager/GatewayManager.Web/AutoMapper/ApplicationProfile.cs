@@ -9,6 +9,9 @@ namespace GatewayManager.Web.AutoMapper
         {
             CreateMap<GatewayCreateModel, DataModels.Gateway>();
             CreateMap<DataModels.PeripheralDevice, PeripheralDevice>();
+            CreateMap<Page, Services.Models.Page>();
+            CreateMap<DataModels.Gateway, Gateway>();
+            CreateMap(typeof(Services.Models.Paginated<>), typeof(Paginated<>));
             CreateMap<DataModels.Gateway, GatewayDetails>()
                 .ForMember(dest => dest.PeripheralDevices,
                     opt => opt.MapFrom(g => g.PeripheralDevices));

@@ -1,17 +1,8 @@
-﻿using AutoMapper;
-using GatewayManager.Web.Models;
+﻿using GatewayManager.Web.AutoMapper;
 
 namespace GatewayManager.Web.Tests.AutoMapper
 {
-    public class TestsProfile : Profile
+    public class TestsProfile : ApplicationProfile
     {
-        public TestsProfile()
-        {
-            CreateMap<GatewayCreateModel, DataModels.Gateway>();
-            CreateMap<DataModels.PeripheralDevice, PeripheralDevice>();
-            CreateMap<DataModels.Gateway, GatewayDetails>()
-                .ForMember(dest => dest.PeripheralDevices,
-                    opt => opt.MapFrom(g => g.PeripheralDevices));
-        }
     }
 }
