@@ -9,7 +9,7 @@ namespace GatewayManager.Data
 
         public DataService(GatewayManagerDbContext dbContext) => DbContext = dbContext;
 
-        public async Task Add(TEntity entity) => await DbContext.Set<TEntity>().AddAsync(entity);
+        public async Task AddAsync(TEntity entity) => await DbContext.Set<TEntity>().AddAsync(entity);
 
         public IQueryable<TEntity> GetAll() => DbContext.Set<TEntity>();
 

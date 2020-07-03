@@ -5,7 +5,7 @@ namespace GatewayManager.Data
 {
     public interface IDataService<TEntity> where TEntity : class
     {
-        Task Add(TEntity entity);
+        Task AddAsync(TEntity entity);
 
         IQueryable<TEntity> GetAll();
 

@@ -13,6 +13,10 @@ namespace GatewayManager.Services
             _gatewayDataService = gatewayDataService;
         }
 
-        public async Task Add(Gateway gateway) => await _gatewayDataService.Add(gateway);
+        public async Task Add(Gateway gateway)
+        {
+            await _gatewayDataService.AddAsync(gateway);
+            await _gatewayDataService.SaveChangesAsync();
+        }
     }
 }
