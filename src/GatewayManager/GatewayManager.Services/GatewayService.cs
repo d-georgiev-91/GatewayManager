@@ -1,6 +1,8 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using GatewayManager.Data;
 using GatewayManager.DataModels;
+using GatewayManager.Services.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace GatewayManager.Services
@@ -31,7 +33,7 @@ namespace GatewayManager.Services
         {
             var result = new ServiceResult<Gateway>();
 
-            var gateway = await _gatewayDataService.Filter(g => g.SerialNumber == serialNumber, 
+            var gateway = await _gatewayDataService.Filter(g => g.SerialNumber == serialNumber,
                     g => g.PeripheralDevices)
                 .SingleOrDefaultAsync();
 
@@ -45,6 +47,27 @@ namespace GatewayManager.Services
             }
 
             return result;
+        }
+
+        public ServiceResult<Paginated<Gateway>> GetAll(Page page)
+        {
+            var serviceResult = new ServiceResult<Paginated<Gateway>>();
+
+            var gatewaysQuery = _gatewayDataService.GetAll();
+
+            var pageQuery = gatewaysQuery
+                .Take(page.Size)
+                .Skip(page.Index * page.Size)
+                .GroupBy(p => new { Total = gatewaysQuery.Count() })
+                .First();
+
+            serviceResult.Data = new Paginated<Gateway>
+            {
+                Data = pageQuery.Select(p => p),
+                TotalCount = pageQuery.Key.Total
+            };
+
+            return serviceResult;
         }
     }
 }
