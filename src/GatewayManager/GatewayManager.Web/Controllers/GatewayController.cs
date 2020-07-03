@@ -34,7 +34,11 @@ namespace GatewayManager.Web.Controllers
                 return BadRequest(result.Errors[ErrorType.InvalidInput]);
             }
 
-            return CreatedAtAction("GetDetails", new { id = 1 }, gatewayCreateModel);
+            return CreatedAtAction(nameof(GetDetails), new { id = 1 }, gatewayCreateModel);
         }
+
+        [HttpGet]
+        [Route("{id}/details")]
+        public IActionResult GetDetails(int id) => throw new System.NotImplementedException();
     }
 }
