@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace GatewayManager.Data
@@ -10,6 +12,9 @@ namespace GatewayManager.Data
         IQueryable<TEntity> GetAll();
 
         Task<TEntity> GetByIdAsync(object id);
+
+        IQueryable<TEntity> Filter<TProperty>(Expression<Func<TEntity, bool>> predicate,
+            Expression<Func<TEntity, TProperty>> include = null);
 
         void Update(TEntity entity);
 
