@@ -34,11 +34,11 @@ namespace GatewayManager.Web.Controllers
                 return BadRequest(result.Errors[ErrorType.InvalidInput]);
             }
 
-            return CreatedAtAction(nameof(GetDetails), new { id = 1 }, gatewayCreateModel);
+            return CreatedAtAction(nameof(GetDetails), new { gatewayCreateModel.SerialNumber }, gatewayCreateModel);
         }
 
         [HttpGet]
-        [Route("{id}/details")]
-        public IActionResult GetDetails(int id) => throw new System.NotImplementedException();
+        [Route("{serialNumber}/details")]
+        public IActionResult GetDetails(string serialNumber) => throw new System.NotImplementedException();
     }
 }
