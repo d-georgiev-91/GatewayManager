@@ -10,21 +10,20 @@ namespace GatewayManager.Web.Controllers
 
     [ApiController]
     [Route("[controller]")]
-    public class GatewayController : ControllerBase
+    public class GatewayController : BaseController
     {
         private readonly IGatewayService _gatewayService;
-        private readonly IMapper _mapper;
 
         public GatewayController(IGatewayService gatewayService, IMapper mapper)
+        : base(mapper)
         {
             _gatewayService = gatewayService;
-            _mapper = mapper;
         }
 
         [HttpPost]
         public async Task<IActionResult> Create(GatewayCreateModel gatewayCreateModel)
         {
-            var gateway = _mapper.Map<GatewayCreateModel, DataModels.Gateway>(gatewayCreateModel);
+            var gateway = Mapper.Map<GatewayCreateModel, DataModels.Gateway>(gatewayCreateModel);
             var result = await _gatewayService.AddAsync(gateway);
 
             if (result.HasErrors && result.Errors.ContainsKey(ErrorType.InvalidInput))
@@ -46,7 +45,7 @@ namespace GatewayManager.Web.Controllers
                 return NotFound(result.Errors[ErrorType.NotFound]);
             }
 
-            var responseData = _mapper.Map<DataModels.Gateway, GatewayDetails>(result.Data);
+            var responseData = Mapper.Map<DataModels.Gateway, GatewayDetails>(result.Data);
 
             return Ok(responseData);
         }
@@ -55,8 +54,8 @@ namespace GatewayManager.Web.Controllers
         [Route("")]
         public async Task<IActionResult> GetAllAsync([FromQuery] Page page)
         {
-            var serviceResult = await _gatewayService.GetAllAsync(_mapper.Map<Page, Services.Models.Page>(page));
-            var pageResult = _mapper.Map<Services.Models.Paginated<DataModels.Gateway>, Paginated<Gateway>>(serviceResult.Data);
+            var serviceResult = await _gatewayService.GetAllAsync(Mapper.Map<Page, Services.Models.Page>(page));
+            var pageResult = Mapper.Map<Services.Models.Paginated<DataModels.Gateway>, Paginated<Gateway>>(serviceResult.Data);
 
             return Ok(pageResult);
         }
