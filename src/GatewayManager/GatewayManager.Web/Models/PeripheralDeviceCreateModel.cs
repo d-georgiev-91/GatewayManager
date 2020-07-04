@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace GatewayManager.Web.Controllers
+namespace GatewayManager.Web.Models
 {
     public class PeripheralDeviceCreateModel
     {
