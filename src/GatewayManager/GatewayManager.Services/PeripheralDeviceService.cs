@@ -13,7 +13,7 @@ namespace GatewayManager.Services
             _peripheralDeviceDataService = peripheralDeviceDataService;
         }
 
-        public async Task Add(PeripheralDevice peripheralDevice)
+        public async Task AddAsync(PeripheralDevice peripheralDevice)
         {
             await _peripheralDeviceDataService.AddAsync(peripheralDevice);
             await _peripheralDeviceDataService.SaveChangesAsync();
