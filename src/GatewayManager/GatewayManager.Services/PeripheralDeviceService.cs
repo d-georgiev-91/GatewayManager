@@ -8,10 +8,7 @@ namespace GatewayManager.Services
     {
         private readonly IDataService<PeripheralDevice> _peripheralDeviceDataService;
 
-        public PeripheralDeviceService(IDataService<PeripheralDevice> peripheralDeviceDataService)
-        {
-            _peripheralDeviceDataService = peripheralDeviceDataService;
-        }
+        public PeripheralDeviceService(IDataService<PeripheralDevice> peripheralDeviceDataService) => _peripheralDeviceDataService = peripheralDeviceDataService;
 
         public async Task AddAsync(PeripheralDevice peripheralDevice)
         {
