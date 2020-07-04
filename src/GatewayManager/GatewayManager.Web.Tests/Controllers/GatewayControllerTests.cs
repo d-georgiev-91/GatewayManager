@@ -17,6 +17,7 @@ namespace GatewayManager.Web.Tests.Controllers
     {
         private IGatewayService _gatewayService;
         private GatewayController _gatewayController;
+        private IGatewayDeviceManager _gatewayDeviceManager;
 
         private IMapper CreateAndConfigMapper()
         {
@@ -32,8 +33,9 @@ namespace GatewayManager.Web.Tests.Controllers
         public void SetUp()
         {
             _gatewayService = Substitute.For<IGatewayService>();
+            _gatewayDeviceManager = Substitute.For<IGatewayDeviceManager>();
             var mapper = CreateAndConfigMapper();
-            _gatewayController = new GatewayController(_gatewayService, mapper);
+            _gatewayController = new GatewayController(_gatewayService, _gatewayDeviceManager, mapper);
         }
 
         [Test]

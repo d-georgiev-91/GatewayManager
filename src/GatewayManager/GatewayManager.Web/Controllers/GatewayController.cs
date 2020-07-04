@@ -13,9 +13,15 @@ namespace GatewayManager.Web.Controllers
     public class GatewayController : BaseController
     {
         private readonly IGatewayService _gatewayService;
+        private readonly IGatewayDeviceManager _gatewayDeviceManager;
 
-        public GatewayController(IGatewayService gatewayService, IMapper mapper) : base(mapper) =>
+        public GatewayController(IGatewayService gatewayService,
+            IGatewayDeviceManager gatewayDeviceManager, IMapper mapper)
+            : base(mapper)
+        {
             _gatewayService = gatewayService;
+            _gatewayDeviceManager = gatewayDeviceManager;
+        }
 
         [HttpPost]
         public async Task<IActionResult> Create(GatewayCreateModel gatewayCreateModel)
@@ -39,7 +45,7 @@ namespace GatewayManager.Web.Controllers
 
             if (result.Errors.ContainsKey(ErrorType.NotFound))
             {
-                return NotFound(result.Errors[ErrorType.NotFound]);
+                return NotFound(result.Errors[ErrorType.NotFound].Message);
             }
 
             var responseData = Mapper.Map<DataModels.Gateway, GatewayDetails>(result.Data);
@@ -55,6 +61,25 @@ namespace GatewayManager.Web.Controllers
             var pageResult = Mapper.Map<Services.Models.Paginated<DataModels.Gateway>, Paginated<Gateway>>(serviceResult.Data);
 
             return Ok(pageResult);
+        }
+
+        [HttpPost]
+        [Route("{serialNumber}/AddDevice/{peripheralDeviceId}")]
+        public async Task<IActionResult> AssignPeripheralDevice(string serialNumber, long peripheralDeviceId)
+        {
+            var serviceResult = await _gatewayDeviceManager.AssignPeripheralDevice(serialNumber, peripheralDeviceId);
+
+            if (serviceResult.Errors.ContainsKey(ErrorType.NotFound))
+            {
+                return NotFound(serviceResult.Errors[ErrorType.NotFound].Message);
+            }
+
+            if (serviceResult.Errors.ContainsKey(ErrorType.InvalidInput))
+            {
+                return BadRequest(serviceResult.Errors[ErrorType.InvalidInput].Message);
+            }
+
+            return Ok();
         }
     }
 }
