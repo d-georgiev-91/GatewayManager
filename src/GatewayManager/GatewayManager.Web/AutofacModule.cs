@@ -9,6 +9,14 @@ namespace GatewayManager.Web
     {
         protected override void Load(ContainerBuilder builder)
         {
+            builder.RegisterType<PeripheralDeviceDataService>()
+                .As<IDataService<PeripheralDevice>>()
+                .InstancePerLifetimeScope();
+
+            builder.RegisterType<PeripheralDeviceService>()
+                .As<IPeripheralDeviceService>()
+                .InstancePerLifetimeScope();
+
             builder.RegisterType<GatewayDataService>()
                 .As<IDataService<Gateway>>()
                 .InstancePerLifetimeScope();
