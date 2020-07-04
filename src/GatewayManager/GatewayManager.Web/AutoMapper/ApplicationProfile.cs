@@ -8,6 +8,7 @@ namespace GatewayManager.Web.AutoMapper
         public ApplicationProfile()
         {
             CreateMap<GatewayCreateModel, DataModels.Gateway>();
+            CreateMap<PeripheralDeviceCreateModel, DataModels.PeripheralDevice>();
             CreateMap<DataModels.PeripheralDevice, PeripheralDevice>();
             CreateMap<Page, Services.Models.Page>();
             CreateMap<DataModels.Gateway, Gateway>();
