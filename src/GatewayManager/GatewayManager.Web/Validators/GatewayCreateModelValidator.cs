@@ -3,9 +3,9 @@ using GatewayManager.Web.Models;
 
 namespace GatewayManager.Web.Validators
 {
-    public class GatewayValidator : AbstractValidator<GatewayCreateModel>
+    public class GatewayCreateModelValidator : AbstractValidator<GatewayCreateModel>
     {
-        public GatewayValidator()
+        public GatewayCreateModelValidator()
         {
             RuleFor(gateway => gateway.SerialNumber).NotEmpty();
             RuleFor(gateway => gateway.Name).NotEmpty();
