@@ -6,5 +6,7 @@ namespace GatewayManager.Services
     public interface IPeripheralDeviceService
     {
         Task AddAsync(PeripheralDevice peripheralDevice);
+        
+        Task<ServiceResult<PeripheralDevice>> GetByIdAsync(long peripheralDeviceId);
     }
 }
