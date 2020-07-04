@@ -7,9 +7,6 @@ namespace GatewayManager.Web.Controllers
     {
         protected readonly IMapper Mapper;
 
-        public BaseController(IMapper mapper)
-        {
-            Mapper = mapper;
-        }
+        public BaseController(IMapper mapper) => Mapper = mapper;
     }
 }

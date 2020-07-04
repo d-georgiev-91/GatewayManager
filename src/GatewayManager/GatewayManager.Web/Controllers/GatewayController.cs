@@ -14,11 +14,8 @@ namespace GatewayManager.Web.Controllers
     {
         private readonly IGatewayService _gatewayService;
 
-        public GatewayController(IGatewayService gatewayService, IMapper mapper)
-        : base(mapper)
-        {
+        public GatewayController(IGatewayService gatewayService, IMapper mapper) : base(mapper) =>
             _gatewayService = gatewayService;
-        }
 
         [HttpPost]
         public async Task<IActionResult> Create(GatewayCreateModel gatewayCreateModel)
