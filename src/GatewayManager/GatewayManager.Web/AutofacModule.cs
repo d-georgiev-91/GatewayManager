@@ -24,6 +24,10 @@ namespace GatewayManager.Web
             builder.RegisterType<GatewayService>()
                 .As<IGatewayService>()
                 .InstancePerLifetimeScope();
+
+            builder.RegisterType<GatewayDeviceManager>()
+                .As<IGatewayDeviceManager>()
+                .InstancePerLifetimeScope();
         }
     }
 }
