@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using AutoMapper;
 using GatewayManager.Services;
 using GatewayManager.Web.Controllers;
 using GatewayManager.Web.Models;
-using GatewayManager.Web.Tests.AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
 using NUnit.Framework;
@@ -13,21 +11,12 @@ using NUnit.Framework;
 namespace GatewayManager.Web.Tests.Controllers
 {
     [TestFixture]
-    public class GatewayControllerTests
+    public class GatewayControllerTests : ControllerTestsBase
     {
         private IGatewayService _gatewayService;
-        private GatewayController _gatewayController;
         private IGatewayDevicesManagerService _gatewayDevicesManagerService;
 
-        private IMapper CreateAndConfigMapper()
-        {
-            var config = new MapperConfiguration(cfg =>
-            {
-                cfg.AddProfile<TestsProfile>();
-            });
-
-            return config.CreateMapper();
-        }
+        private GatewayController _gatewayController;
 
         [SetUp]
         public void SetUp()
