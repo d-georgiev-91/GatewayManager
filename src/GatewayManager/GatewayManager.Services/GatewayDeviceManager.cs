@@ -49,5 +49,32 @@ namespace GatewayManager.Services
 
             return serviceResult;
         }
+
+        public async Task<ServiceResult> RemovePeripheralDeviceAsync(string serialNumber, long peripheralDeviceId)
+        {
+            var gatewayServiceResult = await _gatewayService.FindAsync(serialNumber);
+
+            if (gatewayServiceResult.HasErrors)
+            {
+                return gatewayServiceResult;
+            }
+
+            var gateway = gatewayServiceResult.Data;
+
+            var serviceResult = new ServiceResult();
+
+            var peripheralDeviceServiceResult = await _peripheralDeviceService.GetByIdAsync(peripheralDeviceId);
+
+            if (peripheralDeviceServiceResult.HasErrors)
+            {
+                return peripheralDeviceServiceResult;
+            }
+
+            var peripheralDevice = peripheralDeviceServiceResult.Data;
+
+            await _gatewayService.RemovePeripheralDeviceAsync(gateway, peripheralDevice);
+
+            return serviceResult;
+        }
     }
 }
