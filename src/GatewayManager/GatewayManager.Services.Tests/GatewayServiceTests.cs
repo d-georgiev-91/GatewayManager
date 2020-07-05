@@ -39,8 +39,8 @@ namespace GatewayManager.Services.Tests
 
             var result = await _gatewayService.AddAsync(gateway);
 
-            _gatewayDataService.DidNotReceive().AddAsync(Arg.Any<Gateway>());
-            _gatewayDataService.DidNotReceive().SaveChangesAsync();
+            await _gatewayDataService.DidNotReceive().AddAsync(Arg.Any<Gateway>());
+            await _gatewayDataService.DidNotReceive().SaveChangesAsync();
 
             Assert.That(result.HasErrors, Is.True);
             Assert.That(result.Errors, Does.ContainKey(ErrorType.InvalidInput));
@@ -60,8 +60,8 @@ namespace GatewayManager.Services.Tests
 
             var result = await _gatewayService.AddAsync(gateway);
 
-            _gatewayDataService.Received(1).AddAsync(Arg.Any<Gateway>());
-            _gatewayDataService.Received(1).SaveChangesAsync();
+            await _gatewayDataService.Received(1).AddAsync(Arg.Any<Gateway>());
+            await _gatewayDataService.Received(1).SaveChangesAsync();
 
             Assert.That(result.HasErrors, Is.False);
         }
