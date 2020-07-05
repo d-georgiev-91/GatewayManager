@@ -75,5 +75,11 @@ namespace GatewayManager.Services
             gateway.PeripheralDevices.Add(peripheralDevice);
             await _gatewayDataService.SaveChangesAsync();
         }
+
+        public async Task RemovePeripheralDeviceAsync(Gateway gateway, PeripheralDevice peripheralDevice)
+        {
+            gateway.PeripheralDevices.Remove(peripheralDevice);
+            await _gatewayDataService.SaveChangesAsync();
+        }
     }
 }
