@@ -60,7 +60,7 @@ namespace GatewayManager.Services.Tests
 
             var result = await _gatewayService.AddAsync(gateway);
 
-            await _gatewayDataService.Received(1).AddAsync(Arg.Any<Gateway>());
+            await _gatewayDataService.Received(1).AddAsync(gateway);
             await _gatewayDataService.Received(1).SaveChangesAsync();
 
             Assert.That(result.HasErrors, Is.False);
