@@ -115,7 +115,7 @@ namespace GatewayManager.Web.Tests.Controllers
         }
 
         [Test]
-        public async Task WhenAssignPeripheralDeviceAsyncIsCalledAndThereAreNoErrorsOkResultShouldBeReturned()
+        public async Task WhenAssignPeripheralDeviceIsCalledAndThereAreNoErrorsOkResultShouldBeReturned()
         {
             const string serialNumber = "Serial number";
             const long peripheralDeviceId = 1;
@@ -129,7 +129,7 @@ namespace GatewayManager.Web.Tests.Controllers
         }
 
         [Test]
-        public async Task WhenAssignPeripheralDeviceAsyncIsCalledAndThereIsNotFoundErrorThenNotFoundResultShouldBeReturned()
+        public async Task WhenAssignPeripheralDeviceIsCalledAndThereIsNotFoundErrorThenNotFoundResultShouldBeReturned()
         {
             const string serialNumber = "Serial number";
             const long peripheralDeviceId = 1;
@@ -146,7 +146,7 @@ namespace GatewayManager.Web.Tests.Controllers
         }
 
         [Test]
-        public async Task WhenAssignPeripheralDeviceAsyncIsCalledAndThereIsInvalidInputErrorThenBadRequestResultShouldBeReturned()
+        public async Task WhenAssignPeripheralDeviceIsCalledAndThereIsInvalidInputErrorThenBadRequestResultShouldBeReturned()
         {
             const string serialNumber = "Serial number";
             const long peripheralDeviceId = 1;
