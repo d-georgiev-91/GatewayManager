@@ -69,17 +69,7 @@ namespace GatewayManager.Web.Controllers
         {
             var serviceResult = await _gatewayDevicesManagerService.AssignPeripheralDeviceAsync(serialNumber, peripheralDeviceId);
 
-            if (serviceResult.Errors.ContainsKey(ErrorType.NotFound))
-            {
-                return NotFound(serviceResult.Errors[ErrorType.NotFound].Message);
-            }
-
-            if (serviceResult.Errors.ContainsKey(ErrorType.InvalidInput))
-            {
-                return BadRequest(serviceResult.Errors[ErrorType.InvalidInput].Message);
-            }
-
-            return Ok();
+            return ConvertDevicesManagerServiceResultToActionResult(serviceResult);
         }
 
         [HttpPost]
@@ -88,6 +78,11 @@ namespace GatewayManager.Web.Controllers
         {
             var serviceResult = await _gatewayDevicesManagerService.RemovePeripheralDeviceAsync(serialNumber, peripheralDeviceId);
 
+            return ConvertDevicesManagerServiceResultToActionResult(serviceResult);
+        }
+
+        private IActionResult ConvertDevicesManagerServiceResultToActionResult(ServiceResult serviceResult)
+        {
             if (serviceResult.Errors.ContainsKey(ErrorType.NotFound))
             {
                 return NotFound(serviceResult.Errors[ErrorType.NotFound].Message);
