@@ -38,7 +38,7 @@ namespace GatewayManager.Web.Controllers
         }
 
         [HttpGet]
-        [Route("{serialNumber}/details")]
+        [Route("{serialNumber}")]
         public async Task<IActionResult> GetDetails(string serialNumber)
         {
             var result = await _gatewayService.FindAsync(serialNumber);
