@@ -67,7 +67,7 @@ namespace GatewayManager.Web.Controllers
         [Route("{serialNumber}/AddDevice/{peripheralDeviceId}")]
         public async Task<IActionResult> AssignPeripheralDevice(string serialNumber, long peripheralDeviceId)
         {
-            var serviceResult = await _gatewayDeviceManager.AssignPeripheralDevice(serialNumber, peripheralDeviceId);
+            var serviceResult = await _gatewayDeviceManager.AssignPeripheralDeviceAsync(serialNumber, peripheralDeviceId);
 
             if (serviceResult.Errors.ContainsKey(ErrorType.NotFound))
             {

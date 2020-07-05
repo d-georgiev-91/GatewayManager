@@ -9,6 +9,11 @@ namespace GatewayManager.Services
 {
     public class GatewayService : IGatewayService
     {
+        private const int AllowedPeripheralDevicesPerGateway = 10;
+        private const string GatewayWithSerialNotFoundMessage = "No such gateway with serial number: {0}";
+        private const string GatewayWithSuchSerialNumberAlreadyExistsMessage = "Gateway with such serial number already exists";
+        private const string ExceededAllowedDevicesPerGatewayMessage = "Only {0} peripheral devices are allowed per gateway";
+
         private readonly IDataService<Gateway> _gatewayDataService;
 
         public GatewayService(IDataService<Gateway> gatewayDataService) => _gatewayDataService = gatewayDataService;
@@ -20,7 +25,7 @@ namespace GatewayManager.Services
 
             if (existingGateway != null)
             {
-                return result.AddError(ErrorType.InvalidInput, "Gateway with such serial number already exists");
+                return result.AddError(ErrorType.InvalidInput, GatewayWithSuchSerialNumberAlreadyExistsMessage);
             }
 
             await _gatewayDataService.AddAsync(gateway);
@@ -43,7 +48,7 @@ namespace GatewayManager.Services
             }
             else
             {
-                result.AddError(ErrorType.NotFound, $"No such gateway with serial number: {serialNumber}");
+                result.AddError(ErrorType.NotFound, string.Format(GatewayWithSerialNotFoundMessage, serialNumber));
             }
 
             return result;
@@ -70,10 +75,30 @@ namespace GatewayManager.Services
             return serviceResult;
         }
 
-        public async Task AddPeripheralDeviceAsync(Gateway gateway, PeripheralDevice peripheralDevice)
+        public async Task<ServiceResult> AddPeripheralDeviceAsync(string gatewaySerialNumber, PeripheralDevice peripheralDevice)
         {
+            var serviceResult = new ServiceResult();
+            var gateway = await _gatewayDataService.GetByIdAsync(gatewaySerialNumber);
+
+            if (gateway == null)
+            {
+                serviceResult.AddError(ErrorType.NotFound, string.Format(GatewayWithSerialNotFoundMessage, gatewaySerialNumber));
+
+                return serviceResult;
+            }
+
+            if (gateway.PeripheralDevices.Count >= AllowedPeripheralDevicesPerGateway)
+            {
+                serviceResult.AddError(ErrorType.InvalidInput,
+                    string.Format(ExceededAllowedDevicesPerGatewayMessage, AllowedPeripheralDevicesPerGateway));
+
+                return serviceResult;
+            }
+
             gateway.PeripheralDevices.Add(peripheralDevice);
             await _gatewayDataService.SaveChangesAsync();
+
+            return serviceResult;
         }
 
         public async Task RemovePeripheralDeviceAsync(Gateway gateway, PeripheralDevice peripheralDevice)

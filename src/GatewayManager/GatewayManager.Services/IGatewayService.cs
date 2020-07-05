@@ -12,8 +12,8 @@ namespace GatewayManager.Services
 
         Task<ServiceResult<Paginated<Gateway>>> GetAllAsync(Page page);
 
-        Task AddPeripheralDeviceAsync(Gateway gateway, PeripheralDevice peripheralDevice);
-        
+        Task<ServiceResult> AddPeripheralDeviceAsync(string gatewaySerialNumber, PeripheralDevice peripheralDevice);
+
         Task RemovePeripheralDeviceAsync(Gateway gateway, PeripheralDevice peripheralDevice);
     }
 }
