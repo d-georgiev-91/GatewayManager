@@ -2,7 +2,7 @@
 
 namespace GatewayManager.Services
 {
-    public interface IGatewayDeviceManager
+    public interface IGatewayDevicesManagerService
     {
         Task<ServiceResult> AssignPeripheralDeviceAsync(string serialNumber, long peripheralDeviceId);
         

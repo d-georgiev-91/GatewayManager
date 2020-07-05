@@ -14,6 +14,6 @@ namespace GatewayManager.Services
 
         Task<ServiceResult> AddPeripheralDeviceAsync(string gatewaySerialNumber, PeripheralDevice peripheralDevice);
 
-        Task RemovePeripheralDeviceAsync(Gateway gateway, PeripheralDevice peripheralDevice);
+        Task<ServiceResult> RemovePeripheralDeviceAsync(string gatewaySerialNumber, PeripheralDevice peripheralDevice);
     }
 }

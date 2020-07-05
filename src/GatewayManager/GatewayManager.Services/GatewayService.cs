@@ -101,10 +101,22 @@ namespace GatewayManager.Services
             return serviceResult;
         }
 
-        public async Task RemovePeripheralDeviceAsync(Gateway gateway, PeripheralDevice peripheralDevice)
+        public async Task<ServiceResult> RemovePeripheralDeviceAsync(string gatewaySerialNumber, PeripheralDevice peripheralDevice)
         {
+            var serviceResult = new ServiceResult();
+            var gateway = await _gatewayDataService.GetByIdAsync(gatewaySerialNumber);
+
+            if (gateway == null)
+            {
+                serviceResult.AddError(ErrorType.NotFound, string.Format(GatewayWithSerialNotFoundMessage, gatewaySerialNumber));
+
+                return serviceResult;
+            }
+
             gateway.PeripheralDevices.Remove(peripheralDevice);
             await _gatewayDataService.SaveChangesAsync();
+
+            return serviceResult;
         }
     }
 }

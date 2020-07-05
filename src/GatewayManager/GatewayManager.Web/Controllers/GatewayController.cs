@@ -13,14 +13,14 @@ namespace GatewayManager.Web.Controllers
     public class GatewayController : BaseController
     {
         private readonly IGatewayService _gatewayService;
-        private readonly IGatewayDeviceManager _gatewayDeviceManager;
+        private readonly IGatewayDevicesManagerService _gatewayDevicesManagerService;
 
         public GatewayController(IGatewayService gatewayService,
-            IGatewayDeviceManager gatewayDeviceManager, IMapper mapper)
+            IGatewayDevicesManagerService gatewayDevicesManagerService, IMapper mapper)
             : base(mapper)
         {
             _gatewayService = gatewayService;
-            _gatewayDeviceManager = gatewayDeviceManager;
+            _gatewayDevicesManagerService = gatewayDevicesManagerService;
         }
 
         [HttpPost]
@@ -67,7 +67,7 @@ namespace GatewayManager.Web.Controllers
         [Route("{serialNumber}/AddDevice/{peripheralDeviceId}")]
         public async Task<IActionResult> AssignPeripheralDevice(string serialNumber, long peripheralDeviceId)
         {
-            var serviceResult = await _gatewayDeviceManager.AssignPeripheralDeviceAsync(serialNumber, peripheralDeviceId);
+            var serviceResult = await _gatewayDevicesManagerService.AssignPeripheralDeviceAsync(serialNumber, peripheralDeviceId);
 
             if (serviceResult.Errors.ContainsKey(ErrorType.NotFound))
             {
@@ -86,7 +86,7 @@ namespace GatewayManager.Web.Controllers
         [Route("{serialNumber}/RemoveDevice/{peripheralDeviceId}")]
         public async Task<IActionResult> RemovePeripheralDevice(string serialNumber, long peripheralDeviceId)
         {
-            var serviceResult = await _gatewayDeviceManager.RemovePeripheralDeviceAsync(serialNumber, peripheralDeviceId);
+            var serviceResult = await _gatewayDevicesManagerService.RemovePeripheralDeviceAsync(serialNumber, peripheralDeviceId);
 
             if (serviceResult.Errors.ContainsKey(ErrorType.NotFound))
             {
