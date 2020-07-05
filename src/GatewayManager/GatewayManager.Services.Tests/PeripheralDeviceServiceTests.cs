@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using GatewayManager.Data;
 using GatewayManager.DataModels;
 using NSubstitute;
+using NSubstitute.ReturnsExtensions;
 using NUnit.Framework;
 
 namespace GatewayManager.Services.Tests
@@ -35,6 +36,31 @@ namespace GatewayManager.Services.Tests
 
             await _peripheralDeviceDataService.Received(1).AddAsync(peripheralDevice);
             await _peripheralDeviceDataService.Received(1).SaveChangesAsync();
+        }
+
+        [Test]
+        public async Task WhenGetByIdIsCalledAndThereIsExistingPeripheralDeviceByGivenIdThenServiceResultWithNoErrorsShouldBeReturnedAndDataShouldBeSPeripheralDevice()
+        {
+            const long peripheralDeviceId = 5;
+            var peripheralDevice = new PeripheralDevice();
+            _peripheralDeviceDataService.GetByIdAsync(Arg.Any<object>()).Returns(peripheralDevice);
+
+            var serviceResult = await _peripheralDeviceService.GetByIdAsync(peripheralDeviceId);
+
+            Assert.That(serviceResult.HasErrors, Is.False);
+            Assert.That(serviceResult.Data, Is.SameAs(peripheralDevice));
+        }
+
+        [Test]
+        public async Task WhenGetByIdIsCalledAndThereIsNoPeripheralDeviceByGivenIdThenServiceResultWithNotFoundErrorShouldBeReturned()
+        {
+            const long peripheralDeviceId = 5;
+            _peripheralDeviceDataService.GetByIdAsync(Arg.Any<object>()).ReturnsNull();
+
+            var serviceResult = await _peripheralDeviceService.GetByIdAsync(peripheralDeviceId);
+
+            Assert.That(serviceResult.HasErrors, Is.True);
+            Assert.That(serviceResult.Errors, Contains.Key(ErrorType.NotFound));
         }
     }
 }

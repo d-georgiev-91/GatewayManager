@@ -6,6 +6,7 @@ namespace GatewayManager.Services
 {
     public class PeripheralDeviceService : IPeripheralDeviceService
     {
+        private const string PeripheralDeviceNotFoundMessage = "Peripheral device with UID {0} not found";
         private readonly IDataService<PeripheralDevice> _peripheralDeviceDataService;
 
         public PeripheralDeviceService(IDataService<PeripheralDevice> peripheralDeviceDataService) => _peripheralDeviceDataService = peripheralDeviceDataService;
@@ -25,7 +26,7 @@ namespace GatewayManager.Services
             if (peripheralDevice == null)
             {
                 serviceResult.AddError(ErrorType.NotFound,
-                    $"Peripheral device with UID {peripheralDeviceId} does not exists");
+                    string.Format(PeripheralDeviceNotFoundMessage, peripheralDeviceId));
 
                 return serviceResult;
             }
