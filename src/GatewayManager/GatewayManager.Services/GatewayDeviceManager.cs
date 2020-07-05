@@ -45,7 +45,7 @@ namespace GatewayManager.Services
 
             var peripheralDevice = peripheralDeviceServiceResult.Data;
 
-            _gatewayService.AddPeripheralDeviceAsync(gateway, peripheralDevice);
+            await _gatewayService.AddPeripheralDeviceAsync(gateway, peripheralDevice);
 
             return serviceResult;
         }
