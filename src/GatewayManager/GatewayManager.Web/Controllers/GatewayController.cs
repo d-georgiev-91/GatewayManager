@@ -81,5 +81,24 @@ namespace GatewayManager.Web.Controllers
 
             return Ok();
         }
+
+        [HttpPost]
+        [Route("{serialNumber}/RemoveDevice/{peripheralDeviceId}")]
+        public async Task<IActionResult> RemovePeripheralDevice(string serialNumber, long peripheralDeviceId)
+        {
+            var serviceResult = await _gatewayDeviceManager.RemovePeripheralDeviceAsync(serialNumber, peripheralDeviceId);
+
+            if (serviceResult.Errors.ContainsKey(ErrorType.NotFound))
+            {
+                return NotFound(serviceResult.Errors[ErrorType.NotFound].Message);
+            }
+
+            if (serviceResult.Errors.ContainsKey(ErrorType.InvalidInput))
+            {
+                return BadRequest(serviceResult.Errors[ErrorType.InvalidInput].Message);
+            }
+
+            return Ok();
+        }
     }
 }
