@@ -113,5 +113,53 @@ namespace GatewayManager.Web.Tests.Controllers
             Assert.That(result, Is.Not.Null);
             Assert.That(result.Value, Is.Not.Null);
         }
+
+        [Test]
+        public async Task WhenAssignPeripheralDeviceAsyncIsCalledAndThereAreNoErrorsOkResultShouldBeReturned()
+        {
+            const string serialNumber = "Serial number";
+            const long peripheralDeviceId = 1;
+            var serviceResult = new ServiceResult();
+
+            _gatewayDevicesManagerService.AssignPeripheralDeviceAsync(Arg.Any<string>(), Arg.Any<long>())
+                .Returns(serviceResult);
+
+            var actionResult = await _gatewayController.AssignPeripheralDevice(serialNumber, peripheralDeviceId) as OkResult;
+            Assert.That(actionResult, Is.Not.Null);
+        }
+
+        [Test]
+        public async Task WhenAssignPeripheralDeviceAsyncIsCalledAndThereIsNotFoundErrorThenNotFoundResultShouldBeReturned()
+        {
+            const string serialNumber = "Serial number";
+            const long peripheralDeviceId = 1;
+            var serviceResult = new ServiceResult();
+            var serviceResultError = new ServiceResultError(ErrorType.NotFound, "Not found");
+            serviceResult.AddError(serviceResultError);
+
+            _gatewayDevicesManagerService.AssignPeripheralDeviceAsync(Arg.Any<string>(), Arg.Any<long>())
+                .Returns(serviceResult);
+
+            var actionResult = await _gatewayController.AssignPeripheralDevice(serialNumber, peripheralDeviceId) as NotFoundObjectResult;
+            Assert.That(actionResult, Is.Not.Null);
+            Assert.That(actionResult.Value, Is.EqualTo(serviceResultError.Message));
+        }
+
+        [Test]
+        public async Task WhenAssignPeripheralDeviceAsyncIsCalledAndThereIsInvalidInputErrorThenBadRequestResultShouldBeReturned()
+        {
+            const string serialNumber = "Serial number";
+            const long peripheralDeviceId = 1;
+            var serviceResult = new ServiceResult();
+            var serviceResultError = new ServiceResultError(ErrorType.InvalidInput, "Not found");
+            serviceResult.AddError(serviceResultError);
+
+            _gatewayDevicesManagerService.AssignPeripheralDeviceAsync(Arg.Any<string>(), Arg.Any<long>())
+                .Returns(serviceResult);
+
+            var actionResult = await _gatewayController.AssignPeripheralDevice(serialNumber, peripheralDeviceId) as BadRequestObjectResult;
+            Assert.That(actionResult, Is.Not.Null);
+            Assert.That(actionResult.Value, Is.EqualTo(serviceResultError.Message));
+        }
     }
 }
