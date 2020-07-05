@@ -81,7 +81,7 @@ namespace GatewayManager.Web.Tests.Controllers
             var result = await _gatewayController.GetDetails(serialNumber) as NotFoundObjectResult;
 
             Assert.That(result, Is.Not.Null);
-            Assert.That(result.Value, Is.EqualTo(notFoundError));
+            Assert.That(result.Value, Is.EqualTo(notFoundError.Message));
         }
 
         [Test]
@@ -158,6 +158,54 @@ namespace GatewayManager.Web.Tests.Controllers
                 .Returns(serviceResult);
 
             var actionResult = await _gatewayController.AssignPeripheralDevice(serialNumber, peripheralDeviceId) as BadRequestObjectResult;
+            Assert.That(actionResult, Is.Not.Null);
+            Assert.That(actionResult.Value, Is.EqualTo(serviceResultError.Message));
+        }
+
+        [Test]
+        public async Task WhenRemovePeripheralDeviceIsCalledAndThereAreNoErrorsOkResultShouldBeReturned()
+        {
+            const string serialNumber = "Serial number";
+            const long peripheralDeviceId = 1;
+            var serviceResult = new ServiceResult();
+
+            _gatewayDevicesManagerService.RemovePeripheralDeviceAsync(Arg.Any<string>(), Arg.Any<long>())
+                .Returns(serviceResult);
+
+            var actionResult = await _gatewayController.RemovePeripheralDevice(serialNumber, peripheralDeviceId) as OkResult;
+            Assert.That(actionResult, Is.Not.Null);
+        }
+
+        [Test]
+        public async Task WhenRemovePeripheralDeviceIsCalledAndThereIsNotFoundErrorThenNotFoundResultShouldBeReturned()
+        {
+            const string serialNumber = "Serial number";
+            const long peripheralDeviceId = 1;
+            var serviceResult = new ServiceResult();
+            var serviceResultError = new ServiceResultError(ErrorType.NotFound, "Not found");
+            serviceResult.AddError(serviceResultError);
+
+            _gatewayDevicesManagerService.RemovePeripheralDeviceAsync(Arg.Any<string>(), Arg.Any<long>())
+                .Returns(serviceResult);
+
+            var actionResult = await _gatewayController.RemovePeripheralDevice(serialNumber, peripheralDeviceId) as NotFoundObjectResult;
+            Assert.That(actionResult, Is.Not.Null);
+            Assert.That(actionResult.Value, Is.EqualTo(serviceResultError.Message));
+        }
+
+        [Test]
+        public async Task WhenRemovePeripheralDeviceIsCalledAndThereIsInvalidInputErrorThenBadRequestResultShouldBeReturned()
+        {
+            const string serialNumber = "Serial number";
+            const long peripheralDeviceId = 1;
+            var serviceResult = new ServiceResult();
+            var serviceResultError = new ServiceResultError(ErrorType.InvalidInput, "Not found");
+            serviceResult.AddError(serviceResultError);
+
+            _gatewayDevicesManagerService.RemovePeripheralDeviceAsync(Arg.Any<string>(), Arg.Any<long>())
+                .Returns(serviceResult);
+
+            var actionResult = await _gatewayController.RemovePeripheralDevice(serialNumber, peripheralDeviceId) as BadRequestObjectResult;
             Assert.That(actionResult, Is.Not.Null);
             Assert.That(actionResult.Value, Is.EqualTo(serviceResultError.Message));
         }
